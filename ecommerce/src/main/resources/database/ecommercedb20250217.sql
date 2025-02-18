@@ -104,3 +104,5 @@ insert into `ecommercedb`.`category`(`title`, `alias`, `image`, `enabled`) value
 insert into `ecommercedb`.`category`(`title`, `alias`, `image`, `enabled`) values ('Clothes', 'clotes', 'clothes.png', 1);
 insert into `ecommercedb`.`category`(`title`, `alias`, `image`, `enabled`) values ('TV', 'tv', 'tv.png', 1);
 insert into `ecommercedb`.`category`(`title`, `alias`, `image`, `enabled`) values ('Watches', 'watches', 'wathches.png', 1);
+
+alter table `ecommercedb`.`user` add column `email` varchar(255) null default null after `login`;
