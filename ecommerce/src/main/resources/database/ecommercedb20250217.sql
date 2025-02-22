@@ -106,3 +106,4 @@ insert into `ecommercedb`.`category`(`title`, `alias`, `image`, `enabled`) value
 insert into `ecommercedb`.`category`(`title`, `alias`, `image`, `enabled`) values ('Watches', 'watches', 'wathches.png', 1);
 
 alter table `ecommercedb`.`user` add column `email` varchar(255) null default null after `login`;
+alter table `ecommercedb`.`orders` change column `shopping_type` `shipping_type` int not null;
