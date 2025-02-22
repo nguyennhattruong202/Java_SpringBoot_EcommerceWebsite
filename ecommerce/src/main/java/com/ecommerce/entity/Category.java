@@ -47,7 +47,7 @@ public class Category implements Serializable {
     @Column(name = "image", nullable = false, length = 255)
     private String image;
     @Basic(optional = false)
-    @Column(name = "enabled", nullable = false)
+    @Column(name = "enabled", nullable = false, columnDefinition = "TINYINT")
     private Boolean enabled;
     @Column(name = "all_parent_ids", length = 255, nullable = true)
     @ToString.Exclude
@@ -62,7 +62,7 @@ public class Category implements Serializable {
     @ToString.Exclude
     @JsonIgnore
     private Set<Category> children = new HashSet<>();
-    @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Product> products;
 }
