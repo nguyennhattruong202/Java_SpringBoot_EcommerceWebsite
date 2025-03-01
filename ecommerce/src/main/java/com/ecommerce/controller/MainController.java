@@ -1,5 +1,7 @@
 package com.ecommerce.controller;
 
+import com.ecommerce.dto.request.UserRegistrationRequest;
+import com.ecommerce.dto.request.UserInfoRegistrationRequest;
 import com.ecommerce.exception.ProductNotFoundException;
 import com.ecommerce.service.CategoryService;
 import com.ecommerce.service.ProductService;
@@ -28,5 +30,21 @@ public class MainController {
             return "error/page404";
         }
         return "index";
+    }
+
+    @GetMapping("/registration")
+    public String registration(Model model) {
+        model.addAttribute("user", new UserRegistrationRequest());
+        model.addAttribute("userInfo", new UserInfoRegistrationRequest());
+        return "registration";
+    }
+
+    @PostMapping("/registration")
+    public String registration(User user, UserInfo userInfo) {
+        user.setRole(Role.USER);
+        user.setUserInfo(userInfo);
+        userInfo.setUser(user);
+        userService.saveUser(user);
+        return "redirect:/";
     }
 }
