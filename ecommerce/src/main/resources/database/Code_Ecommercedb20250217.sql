@@ -109,3 +109,6 @@ alter table `ecommercedb`.`user` add column `email` varchar(255) null default nu
 alter table `ecommercedb`.`orders` change column `shopping_type` `shipping_type` int not null;
 alter table `ecommercedb`.`category` change column `enabled` `enabled` tinyint(1) not null;
 alter table `ecommercedb`.`category` change column `enabled` `enabled` tinyint not null;
+
+alter table `ecommercedb`.`user_info` drop column `email`;
+alter table `ecommercedb`.`user` change column `email` `email` varchar(255) not null;
