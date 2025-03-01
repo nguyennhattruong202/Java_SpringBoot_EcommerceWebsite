@@ -37,9 +37,6 @@ public class UserInfo implements Serializable{
     @Basic(optional = false)
     @Column(name = "phone", nullable = false, length = 255)
     private String phone;
-    @Basic(optional = false)
-    @Column(name = "email", nullable = false, length = 255)
-    private String email;
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
