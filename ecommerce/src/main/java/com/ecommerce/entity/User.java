@@ -39,8 +39,8 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "password", nullable = false, length = 155)
     private String password;
-    @Basic(optional = true)
-    @Column(name = "email", nullable = true, length = 255)
+    @Basic(optional = false)
+    @Column(name = "email", nullable = false, length = 255)
     private String email;
     @Basic(optional = false)
     @Enumerated(EnumType.STRING)
