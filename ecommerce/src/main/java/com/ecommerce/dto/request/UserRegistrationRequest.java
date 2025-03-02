@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 public class UserRegistrationRequest {
 
     @Size(max = 255)
+    @NotNull
+    @NotBlank
     @Email
     private String email;
     @NotNull

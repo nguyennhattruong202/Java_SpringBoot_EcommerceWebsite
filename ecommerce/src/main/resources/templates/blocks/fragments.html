@@ -17,6 +17,11 @@
     <div th:fragment="scripts">
         <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script type="text/javascript">
+            var contextPath = "[[@{/}]]";
+            var csrfHeaderName = "[[${_csrf.headerName}]]";
+            var csrfValue = "[[${_csrf.token}]]";
+        </script>
     </div>
     <!-- [END] Main scripts -->
     <!--[START] Navigation bar -->
@@ -175,7 +180,7 @@
                     <span id="modalBody">This is content</span>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger rounded" data-dismiss="modal">[[modal.closeBtn]]</button>
+                    <button type="button" class="btn btn-danger rounded" data-dismiss="modal">[[#{modal.closeBtn}]]</button>
                 </div>
             </div>
         </div>
