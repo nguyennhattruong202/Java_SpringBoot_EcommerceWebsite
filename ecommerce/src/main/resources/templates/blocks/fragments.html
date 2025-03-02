@@ -17,6 +17,11 @@
     <div th:fragment="scripts">
         <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script type="text/javascript">
+            var contextPath = "[[@{/}]]";
+            var csrfHeaderName = "[[${_csrf.headerName}]]";
+            var csrfValue = "[[${_csrf.token}]]";
+        </script>
     </div>
     <!-- [END] Main scripts -->
     <!--[START] Navigation bar -->
@@ -163,4 +168,22 @@
         </div>
     </footer>
     <!-- [END] Footer -->
+
+    <!-- [START] My modal -->
+    <div th:fragment="showModal" class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Warning</h4>
+                </div>
+                <div class="modal-body">
+                    <span id="modalBody">This is content</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger rounded" data-dismiss="modal">[[#{modal.closeBtn}]]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [END] My modal -->
 </html>
