@@ -60,4 +60,10 @@ public class MainController {
         userService.saveUser(user);
         return "redirect:/";
     }
+
+    @GetMapping("/category")
+    public String showCategories(Model model) {
+        model.addAttribute("listCategories", categoryService.findAllEnabled());
+        return "category";
+    }
 }
