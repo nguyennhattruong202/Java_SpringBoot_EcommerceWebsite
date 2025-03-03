@@ -2,6 +2,8 @@ package com.ecommerce.controller;
 
 import com.ecommerce.dto.request.UserRegistrationRequest;
 import com.ecommerce.dto.request.UserInfoRegistrationRequest;
+import com.ecommerce.entity.Order;
+import com.ecommerce.entity.OrderBasket;
 import com.ecommerce.entity.User;
 import com.ecommerce.entity.UserInfo;
 import com.ecommerce.enums.Role;
@@ -11,10 +13,13 @@ import com.ecommerce.mapper.UserMapper;
 import com.ecommerce.service.CategoryService;
 import com.ecommerce.service.ProductService;
 import com.ecommerce.service.UserService;
+import java.security.Principal;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.webjars.NotFoundException;
 
 @Controller
 public class MainController {
@@ -59,5 +64,18 @@ public class MainController {
         userInfo.setUser(user);
         userService.saveUser(user);
         return "redirect:/";
+    }
+
+    @GetMapping("/basket")
+    public String showShoppingCart(Model model, Principal principal) {
+        if (principal != null) {
+            List<OrderBasket> orderBasket = userService.getUserByLogin(principal.getName()).getOrderBaskets();
+            model.addAttribute("orderBaskets", orderBasket);
+            model.addAttribute("order", new Order());
+        } else {
+            model.addAttribute("error", new NotFoundException("Order basket was not found"));
+            return "error/page404";
+        }
+        return "shopping-cart";
     }
 }
