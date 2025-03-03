@@ -186,4 +186,16 @@
         </div>
     </div>
     <!-- [END] My modal -->
+    <!-- [START] Additional footer for checkout and admin -->
+    <div th:fragment="additional_footer" class="text-center copyright mt-5 p-4">
+        <hr/>
+        <span class="credit">
+            [[#{footer.created}]]
+            <a href="https://github.com">Github</a>
+            |
+        </span>
+        <span class="far fa-copyright"></span>
+        <span>[[#{footer.copyright}]]</span>
+    </div>
+    <!-- [END] Additional footer for checkout and admin -->
 </html>
