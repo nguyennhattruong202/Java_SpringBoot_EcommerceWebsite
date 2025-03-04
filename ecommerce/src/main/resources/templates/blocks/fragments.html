@@ -13,6 +13,7 @@
         <link rel="stylesheet" th:href="@{/css/styles.css}"/>
     </head>
     <!-- [END] Head -->
+    
     <!-- [START] Main scripts -->
     <div th:fragment="scripts">
         <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -24,6 +25,7 @@
         </script>
     </div>
     <!-- [END] Main scripts -->
+    
     <!--[START] Navigation bar -->
     <nav th:fragment="navbar" class="navbar sticky-top navbar-expand-lg">
         <div class="container">
@@ -83,6 +85,7 @@
                         </div>
                     </li>
                     <!-- [END] Profile dropdown -->
+                    
                     <!-- [START] Github, linked ect icons -->
                     <li class="nav-item">
                         <a href="https://github.com" class="nav-link waves-effect rounded">
@@ -95,6 +98,7 @@
                         </a>
                     </li>
                     <!-- [END] Github, linked ect icons -->
+                    
                     <!-- [START] Language selector -->
                     <div class="language_selector">
                         <a class="custom_link waves-effect rounded" th:href="@{'?lang=en'}">EN</a>
@@ -110,6 +114,7 @@
         <!-- [END] Login modal -->
     </nav>
     <!--[END] Navigation bar -->
+    
     <!-- [START] Footer -->
     <footer th:fragment="footer" class="footer text-center text-lg-start mt-5">
         <div class="container p-4">
@@ -168,6 +173,7 @@
         </div>
     </footer>
     <!-- [END] Footer -->
+    
     <!-- [START] My modal -->
     <div th:fragment="showModal" class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
@@ -185,6 +191,7 @@
         </div>
     </div>
     <!-- [END] My modal -->
+    
     <!-- [START] Quantity control -->
     <div th:fragment="quantity_control(quantityValue, productId)" class="h-80 d-flex align-items-center justify-content-center">
         <nav>
@@ -202,4 +209,17 @@
         </nav>
     </div>
     <!-- [END] Quantity control -->
+    
+    <!-- [START] Additional footer for checkout and admin -->
+    <div th:fragment="additional_footer" class="text-center copyright mt-5 p-4">
+        <hr/>
+        <span class="credit">
+            [[#{footer.created}]]
+            <a href="https://github.com">Github</a>
+            |
+        </span>
+        <span class="far fa-copyright"></span>
+        <span>[[#{footer.copyright}]]</span>
+    </div>
+    <!-- [END] Additional footer for checkout and admin -->
 </html>

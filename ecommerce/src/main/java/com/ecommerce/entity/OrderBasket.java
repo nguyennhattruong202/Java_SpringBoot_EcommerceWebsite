@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,4 +45,9 @@ public class OrderBasket implements Serializable {
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @ToString.Exclude
     private User user;
+
+    @Transient
+    public float getSubtotal() {
+        return this.product.getPrice() * this.quantity;
+    }
 }
