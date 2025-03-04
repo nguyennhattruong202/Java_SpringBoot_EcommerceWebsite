@@ -78,4 +78,10 @@ public class MainController {
         }
         return "shopping-cart";
     }
+
+    @GetMapping("/category")
+    public String showCategories(Model model) {
+        model.addAttribute("listCategories", categoryService.findAllEnabled());
+        return "category";
+    }
 }
