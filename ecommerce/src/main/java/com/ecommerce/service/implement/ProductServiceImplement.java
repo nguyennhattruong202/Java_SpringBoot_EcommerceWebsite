@@ -7,11 +7,16 @@ import com.ecommerce.service.ProductService;
 import jakarta.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Transactional
 @Service
 public class ProductServiceImplement implements ProductService {
+
+    public static final int PRODUCT_PER_PAGE = 10;
 
     private final ProductRepository productRepository;
 
@@ -33,5 +38,12 @@ public class ProductServiceImplement implements ProductService {
         Collections.shuffle(productList);
         int randomSeriesLength = 8;
         return productList.subList(0, randomSeriesLength);
+    }
+
+    @Override
+    public Page<Product> listByCategory(int pageNum, Long categoryId) {
+        String categoryIdMatch = "-" + String.valueOf(categoryId) + "-";
+        Pageable pageable = PageRequest.of(pageNum - 1, PRODUCT_PER_PAGE);
+        return productRepository.listByCategory(categoryId, pageable, categoryIdMatch);
     }
 }

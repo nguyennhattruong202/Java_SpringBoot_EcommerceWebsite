@@ -13,7 +13,7 @@
         <link rel="stylesheet" th:href="@{/css/styles.css}"/>
     </head>
     <!-- [END] Head -->
-    
+
     <!-- [START] Main scripts -->
     <div th:fragment="scripts">
         <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -25,7 +25,7 @@
         </script>
     </div>
     <!-- [END] Main scripts -->
-    
+
     <!--[START] Navigation bar -->
     <nav th:fragment="navbar" class="navbar sticky-top navbar-expand-lg">
         <div class="container">
@@ -85,7 +85,7 @@
                         </div>
                     </li>
                     <!-- [END] Profile dropdown -->
-                    
+
                     <!-- [START] Github, linked ect icons -->
                     <li class="nav-item">
                         <a href="https://github.com" class="nav-link waves-effect rounded">
@@ -98,7 +98,7 @@
                         </a>
                     </li>
                     <!-- [END] Github, linked ect icons -->
-                    
+
                     <!-- [START] Language selector -->
                     <div class="language_selector">
                         <a class="custom_link waves-effect rounded" th:href="@{'?lang=en'}">EN</a>
@@ -114,7 +114,7 @@
         <!-- [END] Login modal -->
     </nav>
     <!--[END] Navigation bar -->
-    
+
     <!-- [START] Footer -->
     <footer th:fragment="footer" class="footer text-center text-lg-start mt-5">
         <div class="container p-4">
@@ -173,7 +173,7 @@
         </div>
     </footer>
     <!-- [END] Footer -->
-    
+
     <!-- [START] My modal -->
     <div th:fragment="showModal" class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
@@ -191,7 +191,7 @@
         </div>
     </div>
     <!-- [END] My modal -->
-    
+
     <!-- [START] Quantity control -->
     <div th:fragment="quantity_control(quantityValue, productId)" class="h-80 d-flex align-items-center justify-content-center">
         <nav>
@@ -209,7 +209,7 @@
         </nav>
     </div>
     <!-- [END] Quantity control -->
-    
+
     <!-- [START] Additional footer for checkout and admin -->
     <div th:fragment="additional_footer" class="text-center copyright mt-5 p-4">
         <hr/>
@@ -222,4 +222,40 @@
         <span>[[#{footer.copyright}]]</span>
     </div>
     <!-- [END] Additional footer for checkout and admin -->
+
+    <!-- [STRAT] Page link -->
+    <a th:fragment="page_link(moduleURL, pageNum, label)" class="page-link" th:href="@{${moduleURL} + '/page/' + ${pageNum}}">[[${label}]]</a>
+    <!-- [END] Page link -->
+
+    <!-- [STRAT] Pagination -->
+    <div th:fragments="pagination(moduleURL, entityName)" th:remove="tag">
+        <div class="text-center m-1" th:if="${totalItems > 0}">
+            <span style="font-weight: 400; color: #6e757d">[[#{pagination.showing}]] # [[${startCount}]]  [[#{pagination.to}]] [[${endCount}]] [[#{pagination.of}]] [[${totalItems}]]</span>
+        </div>
+        <div class="text-center m-1 mb-4 mt-5" th:unless="${totalItems > 0}">
+            <span style="font-weight: 400; color: #6e757d">[[#{pagination.no}]] [[#{pagination.found}]]</span>
+        </div>
+        <div th:if="${totalPages > 1}">
+            <nav>
+                <ul class="pagination justify-content-center flex-wrap">
+                    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                        <a th:replace="blocks/fragments :: page_link(${moduleURL}, 1, #{pagination.first})"></a>
+                    </li>
+                    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                        <a th:replace="blocks/fragments :: page_link(${moduleURL}, ${currentpage - 1}, #{pagination.previous})"></a>
+                    </li>
+                    <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}" th:each="i : ${#numbers.sequence(1, totalPages)}">
+                        <a th:replace="blocks/fragments :: page_link(${moduleURL}, ${i}, ${i}" ></a>
+                    </li>
+                    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                        <a th:replace="blocks/fragments :: page_link(${moduleURL}, ${currentPage + 1}, #{pagination.next}" ></a>
+                    </li>
+                    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                        <a th:replace="blocks/fragments :: page_link(${moduleURL}, ${totalPages}, #{pagination.last}" ></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- [END] Pagination -->
 </html>
