@@ -40,4 +40,9 @@ public class UserServiceImplement implements UserService {
         }
         userRepository.save(user);
     }
+
+    @Override
+    public User getUserByLogin(String login) {
+        return userRepository.findByLogin(login);
+    }
 }
