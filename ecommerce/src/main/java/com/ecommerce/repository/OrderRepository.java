@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findOrderByUser(User user);
+    
+    public Long countById(Long id);
 }

@@ -3,19 +3,24 @@ package com.ecommerce.controller;
 import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
 import com.ecommerce.exception.CategoryNotFoundException;
+import com.ecommerce.exception.ProductNotFoundException;
 import com.ecommerce.service.CategoryService;
 import com.ecommerce.service.ProductService;
-import java.util.List;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ProductController {
 
     public static final int PRODUCT_PER_PAGE = 10;
+    public static final int SEARCH_RESULTS_PAGE = 10;
 
     private final CategoryService categoryService;
     private final ProductService productService;
@@ -25,6 +30,11 @@ public class ProductController {
         this.categoryService = categoryService;
         this.productService = productService;
         this.adminTools = adminTools;
+    }
+
+    @GetMapping({"/category/{category_alias}"})
+    public String viewCategoryFirstPage(@PathVariable("category_alias") String alias, Model model) {
+        return viewCategoryByPage(alias, model, 1);
     }
 
     @GetMapping("/category/{category_alias}/page/{pageNum}")
@@ -44,5 +54,41 @@ public class ProductController {
             model.addAttribute("error", ex.getLocalizedMessage());
             return "error/page404";
         }
+    }
+
+    @GetMapping("/product/{product_alias}")
+    public String viewProductDetails(@PathVariable("product_alias") String alias, Model model) {
+        try {
+            Product product = productService.getProduct(alias);
+            model.addAttribute("listCategoryParents", categoryService.getCategoryParents(product.getCategory()));
+            model.addAttribute("product", product);
+            return "product/product-page";
+        } catch (ProductNotFoundException e) {
+            model.addAttribute("error", e.getLocalizedMessage());
+            return "error/page404";
+        }
+    }
+
+    @PostMapping("/products/check_unique")
+    public @ResponseBody
+    String checkUnique(@Param("id") Long id, @Param("title") String title) {
+        return productService.checkUnique(id, title);
+    }
+
+    @GetMapping("/search")
+    public String searchFirstPage(@Param("keyword") String keyword, Model model) {
+        return searchByPage(keyword, 1, model);
+    }
+
+    @GetMapping("/search/page/{pageNum}")
+    public String searchByPage(@Param("keyword") String keyword, @PathVariable("pageNum") int pageNum, Model model) {
+        Page<Product> productsPage = productService.search(keyword, pageNum);
+        long startCount = (pageNum - 1) * SEARCH_RESULTS_PAGE + 1;
+        long endCount = startCount + SEARCH_RESULTS_PAGE - 1;
+        adminTools.pageCountMethod(pageNum, model, productsPage, startCount, endCount);
+        model.addAttribute("pageTitle", StringUtils.capitalize(keyword) + " - Search Result");
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("resultList", productsPage.getContent());
+        return "product/search_result";
     }
 }

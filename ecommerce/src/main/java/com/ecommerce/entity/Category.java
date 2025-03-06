@@ -65,4 +65,34 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Product> products;
+
+    public static Category copyIdAndTitle(Category category) {
+        Category copyCategory = new Category();
+        copyCategory.setId(category.getId());
+        copyCategory.setTitle(category.getTitle());
+        return copyCategory;
+    }
+
+    public static Category copyIdAndTitle(Long id, String title) {
+        Category copyCategory = new Category();
+        copyCategory.setId(id);
+        copyCategory.setTitle(title);
+        return copyCategory;
+    }
+
+    public static Category copyFull(Category category) {
+        Category copyCategory = new Category();
+        copyCategory.setId(category.getId());
+        copyCategory.setTitle(category.getTitle());
+        copyCategory.setAlias(category.getAlias());
+        copyCategory.setImage(category.getImage());
+        copyCategory.setEnabled(category.getEnabled());
+        return copyCategory;
+    }
+    
+    public static Category copyFull(Category category, String title) {
+        Category copyCategory = Category.copyFull(category);
+        copyCategory.setTitle(title);
+        return copyCategory;
+    }
 }
