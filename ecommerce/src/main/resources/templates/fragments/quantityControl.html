@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <div th:fragment="quantityControl(quantityValue, productId)"
+             class="h-80 d-flex align-items-center justify-content-center">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link minusButton" 
+                           href="#" 
+                           th:id="${productId}">
+                            <b>-</b>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <input type="text" 
+                               th:value="${quantityValue}" 
+                               class="form-control text-center" 
+                               onkeydown="return false;" 
+                               style="max-width: 55px; max-height: 35px;" 
+                               th:id="'quantity' + ${productId}"/>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link plusButton" 
+                           href="#" 
+                           th:id="${productId}">
+                            <b>+</b>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </body>
+</html>

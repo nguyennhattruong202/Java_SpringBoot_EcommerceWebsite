@@ -871,3 +871,8 @@ svg{
         position: relative;
     }
 }
+
+#navbarContent ul:nth-child(2){
+    width: 100%;
+    align-content: end;
+}

@@ -2,6 +2,7 @@ package com.ecommerce.controller;
 
 import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
+import com.ecommerce.enums.Pagination;
 import com.ecommerce.exception.CategoryNotFoundException;
 import com.ecommerce.exception.ProductNotFoundException;
 import com.ecommerce.service.CategoryService;
@@ -19,9 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ProductController {
 
-    public static final int PRODUCT_PER_PAGE = 10;
-    public static final int SEARCH_RESULTS_PAGE = 10;
-
     private final CategoryService categoryService;
     private final ProductService productService;
     private final AdminTools adminTools;
@@ -32,24 +30,36 @@ public class ProductController {
         this.adminTools = adminTools;
     }
 
+    @GetMapping("/demo")
+    public String viewDemo(Model model) {
+        return viewDemoByPage(1, model);
+    }
+
+    @GetMapping("/demo/page/{pageNumber}")
+    public String viewDemoByPage(@PathVariable("pageNumber") int pageNumber, Model model) {
+        model.addAttribute("pageNumber", pageNumber); 
+        return "demo";
+    }
+
     @GetMapping({"/category/{category_alias}"})
     public String viewCategoryFirstPage(@PathVariable("category_alias") String alias, Model model) {
         return viewCategoryByPage(alias, model, 1);
     }
 
     @GetMapping("/category/{category_alias}/page/{pageNum}")
-    public String viewCategoryByPage(@PathVariable("category_alias") String alias, Model model, @PathVariable("pageNum") int pageNum) {
+    public String viewCategoryByPage(@PathVariable("category_alias") String alias, Model model,
+            @PathVariable("pageNum") int pageNum) {
         try {
             Category category = categoryService.getCategoryByAlias(alias);
             Page<Product> pageProduct = productService.listByCategory(pageNum, category.getId());
-            long startCount = (pageNum - 1) * PRODUCT_PER_PAGE + 1;
-            long endCount = startCount + PRODUCT_PER_PAGE - 1;
+            long startCount = (pageNum - 1) * Pagination.PRODUCT_PER_PAGE.getValue() + 1;
+            long endCount = startCount + Pagination.PRODUCT_PER_PAGE.getValue() - 1;
             adminTools.pageCountMethod(pageNum, model, pageProduct, startCount, endCount);
             model.addAttribute("pageTitle", category.getTitle());
             model.addAttribute("listCategoryParents", categoryService.getCategoryParents(category));
             model.addAttribute("listProducts", pageProduct.getContent());
             model.addAttribute("category", category);
-            return "product/product_by_category";
+            return "product/productsByCategory";
         } catch (CategoryNotFoundException ex) {
             model.addAttribute("error", ex.getLocalizedMessage());
             return "error/page404";
@@ -62,7 +72,7 @@ public class ProductController {
             Product product = productService.getProduct(alias);
             model.addAttribute("listCategoryParents", categoryService.getCategoryParents(product.getCategory()));
             model.addAttribute("product", product);
-            return "product/product-page";
+            return "product/productPage";
         } catch (ProductNotFoundException e) {
             model.addAttribute("error", e.getLocalizedMessage());
             return "error/page404";
@@ -83,8 +93,8 @@ public class ProductController {
     @GetMapping("/search/page/{pageNum}")
     public String searchByPage(@Param("keyword") String keyword, @PathVariable("pageNum") int pageNum, Model model) {
         Page<Product> productsPage = productService.search(keyword, pageNum);
-        long startCount = (pageNum - 1) * SEARCH_RESULTS_PAGE + 1;
-        long endCount = startCount + SEARCH_RESULTS_PAGE - 1;
+        long startCount = (pageNum - 1) * Pagination.SEARCH_RESULTS_PAGE.getValue() + 1;
+        long endCount = startCount + Pagination.SEARCH_RESULTS_PAGE.getValue() - 1;
         adminTools.pageCountMethod(pageNum, model, productsPage, startCount, endCount);
         model.addAttribute("pageTitle", StringUtils.capitalize(keyword) + " - Search Result");
         model.addAttribute("keyword", keyword);

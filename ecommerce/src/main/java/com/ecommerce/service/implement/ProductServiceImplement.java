@@ -36,12 +36,12 @@ public class ProductServiceImplement implements ProductService {
 
     @Override
     public List<Product> getRandomAmountOfProducts() throws ProductNotFoundException {
-        List<Product> productList = this.findAllByCategoryId(4L);
-        if (productList.isEmpty()) {
+        List<Product> productList = this.findAllByCategoryId(1L);
+        if (productList == null || productList.isEmpty()) {
             throw new ProductNotFoundException("Could not find any product");
         }
         Collections.shuffle(productList);
-        int randomSeriesLength = 8;
+        int randomSeriesLength = Math.min(8, productList.size());
         return productList.subList(0, randomSeriesLength);
     }
 

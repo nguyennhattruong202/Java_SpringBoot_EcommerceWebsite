@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head th:replace="fragments/head :: head('Product page - SENKO', 'none')"></head>
+    <body>
+        <div th:replace="fragments/navbar :: navbar"></div>
+        <main class="container-fluid">
+            <!-- [START] breadcrumb -->
+            <div th:replace="fragments/breadcrumb :: breadcrumb"></div>
+            <!-- [END] breadcrumb -->
+            <div class="container dark-grey-text mt-5">
+                <div class="row wow fadeIn">
+                    <div class="col-md-6 mb-4">
+                        <img th:src="${product.image}" 
+                             class="img-fluid rounded" 
+                             width="300"/>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4">
+                            <div>
+                                <h2 th:text="${product.title}"></h2>
+                            </div>
+                            <div class="mb-3">
+                                <a th:href="@{'/category/'+ ${product.category.alias}}">
+                                    <span class="badge purple mr-1" 
+                                          th:text="#{admin.product.category} + ': ' + ${product.category.title}">
+                                    </span>
+                                </a>
+                                <span class="badge blue mr-1" 
+                                      th:text="#{admin.product.vendor} + ': ' + ${product.vendor.title}">
+                                </span>
+                            </div>
+                            <p class="lead">
+                            <h4>
+                                <strong th:text="#{admin.product.price} + ': ' + ${product.price}"></strong> 
+                            </h4>
+                            </p>
+                            <p class="lead font-weight-bold" 
+                               th:text="#{admin.product.shortDescription}">
+                            </p>
+                            <p th:utext="${product.description}"></p>
+                            <div class="d-flex justify-content-left">
+                                <!-- [START] quantityControl -->
+                                <div th:replace="fragments/quantityControl :: quantityControl(1, ${product.id})"></div>
+                                <!-- [END] quantityControl -->
+                                <div>
+                                    <button class="productBtn my-0 rounded" 
+                                            type="submit" 
+                                            id="addToCartBtn"
+                                            th:text="#{product.addToCartBtn}"
+                                            th:onclick="addToCart(${product.id})">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- [START] footer -->
+        <footer th:replace="fragments/footer :: footer"></footer>
+        <!-- [END] footer -->
+        <!-- [START] modal -->
+        <div th:replace="fragments/modal :: modal"></div>
+        <!-- [END] modal -->
+        <!-- [START] scripts -->
+        <div th:replace="fragments/scripts :: scripts"></div>
+        <!-- [END] scripts -->
+        <script th:src="@{/js/quantityControl.js}"></script>
+        <script th:src="@{/js/addedToCart.js}"></script>
+    </body>
+</html>

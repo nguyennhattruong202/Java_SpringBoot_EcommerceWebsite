@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <div th:fragment="productFragment" 
+             class="col">
+            <div class="zoom">
+                <a th:href="@{'/product/' + ${product.alias}}">
+                    <img class="rounded" 
+                         th:src="${product.image}" 
+                         width="150"/>
+                    <br/>
+                    <br/>
+                    <div class="card-body">
+                        <b th:text="${product.title}"></b>
+                        <div>
+                            <span class="font-weight-bolder text-dark"
+                                  th:text="${product.price}">
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </body>
+</html>

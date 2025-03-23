@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <footer th:fragment="footer" 
+                class="footer text-center text-lg-start mt-5">
+            <div class="container p-4">
+                <div class="row mt-4">
+                    <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+                        <h5 class="text-uppercase mb-4" 
+                            th:text="#{footer.titleAbout}">
+                        </h5>
+                        <p>
+                            <strong th:text="SENKO"></strong>
+                            [[#{footer.textAbout}]]
+                        </p>
+                        <div class="mt-4">
+                            <button onlick="location.href='https://github.com'" 
+                                    type="button" 
+                                    class="btn btn-circle btn-md">
+                                <em class="fab fa-github fa-lg"></em>
+                            </button>
+                            <button onclick="location.href = 'https://linkedin.com'" 
+                                    type="button" 
+                                    class="btn btn-circle btn-md">
+                                <em class="fab fa-linkedin fa-lg"></em>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase mb-4 pb-1" 
+                            th:text="#{footer.address}">
+                        </h5>
+                        <ul class="fa-ul" 
+                            style="margin-left: 1.65em;">
+                            <li class="mb-3">
+                                <span class="fa-li">
+                                    <em class="fas fa-home"></em>
+                                </span>
+                                <span class="ms-2" 
+                                      th:text="#{footer.city}"></span>
+                            </li>
+                            <li class="mb-3">
+                                <span class="fa-li">
+                                    <em class="fas fa-envelope"></em>
+                                </span>
+                                <span class="ms-2">
+                                    mail-address@gmail.com
+                                </span>
+                            </li>
+                            <li class="mb-3">
+                                <span class="fa-li">
+                                    <em class="fas fa-phone"></em>
+                                </span>
+                                <span class="ms-2" 
+                                      th:text="phone-number">
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase mb-4" 
+                            th:text="#{footer.findUs}">
+                        </h5>
+                        <iframe class="google_map rounded" 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.9258293981825!2d106.67329437415916!3d10.816988089334236!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175291e04dd4207%3A0x10e66eec2cc9fe9a!2zNTI4IE5ndXnhu4VuIFbEg24gQ8O0bmcsIFBoxrDhu51uZyAzLCBHw7IgVuG6pXAsIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1741594190097!5m2!1svi!2s" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center copyright p-3">
+                <span class="credit">
+                    [[#{footer.created}]]
+                    <a href="https://github.com"></a>
+                </span>
+                <span class="far fa-copyright"></span>
+                <span th:text="#{footer.copyright}"></span>
+            </div>
+        </footer>
+    </body>
+</html>

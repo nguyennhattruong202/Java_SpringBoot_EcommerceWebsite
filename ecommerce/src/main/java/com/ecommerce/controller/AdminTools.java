@@ -140,7 +140,7 @@ public class AdminTools {
         return "admin/product/products";
     }
 
-    public void pageCountMethod(@PathVariable("pageNum") int pageNum, Model model, 
+    public void pageCountMethod(int pageNum, Model model,
             Page<?> page, long startCount, long endCount) {
         if (endCount > page.getTotalElements()) {
             endCount = page.getTotalElements();

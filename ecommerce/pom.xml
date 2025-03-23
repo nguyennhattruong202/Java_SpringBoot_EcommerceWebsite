@@ -30,8 +30,9 @@
         <java.version>21</java.version>
         <mysql.version>8.0.33</mysql.version>
         <jacoco.version>0.8.12</jacoco.version>
-        <webjars.bootstrap.version>4.3.1</webjars.bootstrap.version>
+        <webjars.bootstrap.version>5.3.2</webjars.bootstrap.version>
         <webjars.jquery.version>3.4.1</webjars.jquery.version>
+        <thymeleaf-springsecurity5.version>3.0.4.RELEASE</thymeleaf-springsecurity5.version>
     </properties>
     <dependencies>
         <dependency>
@@ -121,6 +122,24 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <version>${thymeleaf-springsecurity5.version}</version>
+        </dependency>   
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

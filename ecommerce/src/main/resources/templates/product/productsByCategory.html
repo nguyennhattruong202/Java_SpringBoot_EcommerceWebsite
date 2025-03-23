@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+    <!-- [START] head -->
+    <head th:replace="fragments/head :: head('Products - SENKO', 'none')"></head>
+    <!-- [START] head -->
+    <body class="d-flex flex-column min-vh-100">
+        <!-- [START] navbar -->
+        <div th:replace="fragments/navbar :: navbar"></div>
+        <!-- [END] navbar -->
+        <div class="container-fluid">
+            <!-- [START] breadcrumb -->
+            <div th:replace="fragments/breadcrumb :: breadcrumb"></div>
+            <!-- [END] breadcrumb -->
+            <div class="row text-center">
+                <div th:each="cat : ${category.children}">
+                    <div class="col" 
+                         th:if="${cat.enabled == true}">
+                        <a th:href="@{'/category/' + ${cat.alias}}">
+                            <div class="text-center zoom">
+                                <img style="-webkit-filter: drop-shadow(3px 3px 3px #222);
+                                     filter: drop-shadow(3px 3px 3px #222); width: 100px; height: 100px;" 
+                                     th:src="'/category-images/' + ${cat.image}"/>
+                            </div>
+                            <div class="category_label text-center"
+                                 th:text="${cat.title}">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row text-center">
+                <th:block th:each="product : ${listProducts}">
+                    <!-- [START] productFragment -->
+                    <div th:replace="fragments/productFragment :: productFragment"></div>
+                    <!-- [END] productFragment -->
+                </th:block>
+            </div>
+            <!-- [START] pagination -->
+            <div th:replace="fragments/pagination :: pagination('/category/' + ${category.alias}, 'products')"></div>
+            <!-- [END] pagination -->
+        </div>
+        <!-- [START] footer -->
+        <footer th:replace="fragments/footer :: footer"></footer>
+        <!-- [END] footer -->
+        <!-- [START] scripts -->
+        <div th:replace="fragments/scripts :: scripts"></div>
+        <!-- [END] scripts -->
+    </body>
+</html>

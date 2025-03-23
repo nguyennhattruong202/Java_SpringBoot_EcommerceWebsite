@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <div th:fragment="modal" 
+             class="modal fade" 
+             id="myModal" 
+             role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" 
+                            id="modalTitle"
+                            th:text="'Warning'">
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <span id="modalBody" 
+                              th:text="'This is content'">
+                        </span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" 
+                                class="btn btn-danger rounded" 
+                                data-dismiss="modal"
+                                th:text="#{modal.closeBtn}">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

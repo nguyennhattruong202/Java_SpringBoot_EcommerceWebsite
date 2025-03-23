@@ -1,13 +1,6 @@
-$(document).ready(function () {
-    $("#addToCartBtn").on("click", function (e) {
-        addToCart();
-    });
-});
-function addToCart() {
-    quantity = $("#quantity" + productId).val();
-
-    url = contextPath + "basket/add/" + productId + "/" + quantity;
-
+function addToCart(productId) {
+    let quantity = $("#quantity" + productId).val();
+    let url = contextPath + "basket/add/" + productId + "/" + quantity;
     $.ajax({
         type: "POST",
         url: url,
