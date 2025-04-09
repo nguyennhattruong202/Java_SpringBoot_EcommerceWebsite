@@ -50,12 +50,12 @@ public class UserServiceImplement implements UserService {
 
     @Override
     public User getUserByLogin(String login) {
-        return userRepository.findByLogin(login);
+        return userRepository.findByLogin(login).get();
     }
 
     @Override
     public String isLoginUnique(Long id, String login) {
-        User userByLogin = userRepository.findByLogin(login);
+        User userByLogin = userRepository.findByLogin(login).get();
         if (id == null) {
             if (userByLogin != null) {
                 return "Duplicate";
@@ -70,7 +70,7 @@ public class UserServiceImplement implements UserService {
 
     @Override
     public boolean checkLoginRegistration(String login) {
-        User user = userRepository.findByLogin(login);
+        User user = userRepository.findByLogin(login).get();
         return user == null;
     }
 

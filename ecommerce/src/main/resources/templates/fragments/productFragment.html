@@ -7,7 +7,8 @@
                 <a th:href="@{'/product/' + ${product.alias}}">
                     <img class="rounded" 
                          th:src="${product.image}" 
-                         width="150"/>
+                         width="150"
+                         th:alt="${product.alias} + '-image'"/>
                     <br/>
                     <br/>
                     <div class="card-body">

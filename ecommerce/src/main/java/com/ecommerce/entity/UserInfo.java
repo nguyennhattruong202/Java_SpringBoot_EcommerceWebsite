@@ -1,5 +1,6 @@
 package com.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,5 +43,6 @@ public class UserInfo implements Serializable{
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_info_id")
     @ToString.Exclude
+    @JsonIgnore
     private User user;
 }

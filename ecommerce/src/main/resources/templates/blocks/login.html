@@ -18,7 +18,7 @@
                             <a type="button" 
                                class="close" 
                                aria-label="Close" 
-                               data-dismis="modal">
+                               data-dismiss="modal">
                                 <span aria-hidden="true">&times;</span>
                             </a>
                         </div>
@@ -28,7 +28,7 @@
                               method="post">
                             <input class="text-center rounded" 
                                    type="text" 
-                                   name="username" 
+                                   name="login" 
                                    th:attr="placeholder=#{login.username}" 
                                    required="true" 
                                    minlength="4" 
@@ -41,7 +41,7 @@
                                    minlength="4" 
                                    maxlength="40"/>
                             <button type="submit" 
-                                    class="btn-block rounded" 
+                                    class="w-100 rounded" 
                                     style="height: 35px;"
                                     th:text="#{login.submit}">
                             </button>

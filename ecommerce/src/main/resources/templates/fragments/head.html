@@ -3,9 +3,11 @@
     <head th:fragment="head(title, remove)" 
           th:remove="${remove}">
         <meta charset="UTF-8">
-        <title>[[${title}]]</title>
+        <title th:text="${title}"></title>
         <meta name="viewport" 
               content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        <meta name="description" 
+              content="SENKO offers a wide range of home appliances, peripherals, and clothing at competitive prices.">
         <link rel="icon" 
               type="image/x-icon" 
               th:href="@{/assets/favicon.png}"/>

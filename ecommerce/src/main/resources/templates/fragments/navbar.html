@@ -12,7 +12,7 @@
                 </a>
                 <button class="navbar-toggler" 
                         type="button" 
-                        data-toggle="collapse"
+                        data-bs-toggle="collapse"
                         data-target="#navbarContent" 
                         aria-controls="navbarContent" 
                         aria-expanded="false"
@@ -39,18 +39,18 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav nav-flex-icons">
-                        <li class="nav-item"> 
-                            <a sec:authorize="isAuthenticated()" 
-                               th:href="@{/basket}" 
+                        <li sec:authorize="isAuthenticated()" class="nav-item"> 
+                            <a th:href="@{/basket}" 
                                class="nav-link waves-effect rounded">
                                 <em class="fa fa-shopping-cart"></em>
                                 <span class="clearfix d-none d-sm-inline-block" 
                                       th:text="#{navbar.cart}">
                                 </span>
                             </a>
-                            <a sec:authorize="isAnonymous()" 
-                               class="nav-link waves-effect waves-light rounded"
-                               data-toggle="modal" 
+                        </li>
+                        <li sec:authorize="isAnonymous()" class="nav-item"> 
+                            <a class="nav-link waves-effect waves-light rounded"
+                               data-bs-toggle="modal" 
                                href="#loginModal" 
                                role="button">
                                 <em class="fa fa-shopping-cart"></em>
@@ -62,7 +62,7 @@
                         <li sec:authorize="isAnonymous()" 
                             class="nav-item dropdown ml-3">
                             <a class="nav-link waves-effect waves-light rounded"
-                               data-toggle="modal" 
+                               data-bs-toggle="modal" 
                                href="#loginModal" 
                                role="button">
                                 <span class="fas fa-user text-white"></span>
@@ -72,7 +72,7 @@
                             class="nav-item dropdown ml-3">
                             <a class="nav-link dropdown-toggle waves-effect waves-light text-white font-weight-bold rounded"
                                id="navbarDropdownMenuLink-4" 
-                               data-toggle="dropdown"
+                               data-bs-toggle="dropdown"
                                aria-haspopup="true" 
                                aria-expanded="false">
                                 <span class="fas fa-user text-white"></span>

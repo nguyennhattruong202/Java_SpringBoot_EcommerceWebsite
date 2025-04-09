@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home - SENKO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/mdb.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body>
+    <!--[START] navbar -->
+    <nav class="navbar sticky-top navbar-expand-lg">
+        <div class="container">
+            <a href="/" class="navbar-brand waves-effect rounded">
+                <img src="/assets/logo.gif" width="100" alt="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars" style="color:#fff; font-size:26px;">
+                </i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect rounded" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect rounded" href="/category">Categories</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav nav-flex-icons">
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <a href="/basket" class="nav-link waves-effect rounded">
+                            <em class="fa fa-shopping-cart"></em>
+                            <span class="clearfix d-none d-sm-inline-block">Cart</span>
+                        </a>
+                    </li>
+                    <li sec:authorize="isAnonymous()" class="nav-item">
+                        <a class="nav-link waves-effect waves-light rounded" data-toggle="modal" href="#loginModal"
+                            role="button">
+                            <em class="fa fa-shopping-cart"></em>
+                            <span class="clearfix d-none d-sm-inline-block">Cart</span>
+                        </a>
+                    </li>
+                    <li sec:authorize="isAnonymous()" class="nav-item dropdown ml-3">
+                        <a class="nav-link waves-effect waves-light rounded" data-toggle="modal" href="#loginModal"
+                            role="button">
+                            <span class="fas fa-user text-white"></span>
+                        </a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item dropdown ml-3">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light text-white font-weight-bold rounded"
+                            id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <span class="fas fa-user text-white"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-cyan animated slideIn text-center"
+                            aria-labelledby="navbarDropdownMenuLink-4">
+                            <a sec:authorize="hasAuthority('ADMIN')"
+                                class="text-danger dropdown-item waves-effect waves-light rounded"
+                                href="/admin">Admin</a>
+                            <a sec:authorize="isAuthenticated()" class="dropdown-item waves-effect waves-light"
+                                href="/profile">My profile</a>
+                            <a sec:authorize="isAuthenticated()" class="dropdown-item waves-effect waves-light"
+                                href="/orders">My orders</a>
+                            <a sec:authorize="isAuthenticated()" class="dropdown-item waves-effect waves-light"
+                                href="/logout">Logout</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://github.com/SEM24" class="nav-link waves-effect rounded">
+                            <span class="fab fa-github"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.linkedin.com/in/samir-homsi-kak" class="nav-link waves-effect rounded">
+                            <span class="fab fa-linkedin"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="language_selector">
+                            <a class="custom_link waves-effect rounded" href="?lang=en">EN</a>
+                            <div class="vertical-line" style="height: 25px;">
+                            </div>
+                            <a class="custom_link waves-effect rounded" href="?lang=uk">UA</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- [START] loginModal -->
+        <div class="modal fade" id="loginModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="col-1"></div>
+                        <div class="col-10 text-center">
+                            <h5 class="modal-title">Login</h5>
+                        </div>
+                        <div class="col-1 ms-3">
+                            <a type="button" class="close" aria-label="Close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal-body d-flex justify-content-center">
+                        <form action="/login" method="post"><input type="hidden" name="_csrf"
+                                value="YQR9Tl7N59yRheNSeknE-2qkxWLgs9zQoQuHJW3piAJJ8i8rAj1Ndm_6grm84YE0T2TwzlqV6FvYg-v9lz2_QV7eujp8lB9J" />
+                            <input class="text-center rounded" type="text" name="username" required="true" minlength="4"
+                                maxlength="30" placeholder="Login" />
+                            <input class="text-center rounded" type="password" name="password" required="true"
+                                minlength="4" maxlength="40" placeholder="Password " />
+                            <button type="submit" class="btn-block rounded" style="height: 35px;">Sign in</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <span class="message text-center">
+                            Not registered?
+                            <a href="/registration">
+                                <br>
+                                Create account
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [END] loginModal -->
+    </nav>
+    <!--[END] navbar -->
+    <!--[START] carousel -->
+    <div id="carouselFull" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselFull" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselFull" data-slide-to="1"></li>
+            <li data-target="#carouselFull" data-slide-to="2"></li>
+            <li data-target="#carouselFull" data-slide-to="3"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <a href="/category/odg">
+                    <img class="d-block img-fluid" src="/img/ClothesBanner.png" alt="First slide" />
+                    <div class="carousel-caption d-md-block">
+                        <h3 class="text-left">SENKO company offers high-quality men&#39;s dressing</h3>
+                        <p class="text-left">When you come home after work, every person wants to dive into the world of
+                            comfort, relax and have a good rest. Take a shower, drink a cup of tea, sitting on your
+                            favorite sofa. Men&#39;s bathrobes can make your holiday complete, providing serenity,
+                            softness and, of course,comfort.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="/category">
+                    <video class="d-block img-fluid" autoplay="true" loop="true" muted="true">
+                        <source src="/img/samsungBanner.mp4" />
+                    </video>
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="/category/mobilni_telefoni">
+                    <img class="d-block img-fluid" src="/img/PhonesBanner.png" alt="Second slide" />
+                    <div class="carousel-caption d-md-block" style="margin-bottom: 55px;">
+                        <h3 class="text-left">New look in Note style</h3>
+                        <p class="text-left">Meet the Galaxy S22 Ultra with Note capabilities. A sleek polished bezel
+                            encircles body with a raised surface for a symmetrical elegance. And the camera block drawn
+                            in a line, accented by the same lens rings, seems to be hovering over the back cover.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="/category/elektronika">
+                    <img class="d-block img-fluid" src="/img/ElectronicsBanner.png" alt="Third slide" />
+                    <div class="carousel-caption d-md-block">
+                        <h3 class="text-left">ROG Strix G15 is a gaming station for eSports competitions.</h3>
+                        <p class="text-left">Each user has their own preferences regarding the parameters of the gaming
+                            system, and therefore the ROG Strix G15 computer offers a wide range of personalization
+                            options. Synchronized Aura lighting helps everyone express their personal style with vivid
+                            visual effects.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselFull" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true">
+            </span>
+            <span class="sr-only">
+                Previous
+            </span>
+        </a>
+        <a class="carousel-control-next" href="#carouselFull" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true">
+            </span>
+            <span class="sr-only">
+                Next
+            </span>
+        </a>
+    </div>
+    <!--[END] carousel -->
+    <main>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg mt-3 mb-4 rounded">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nextNav"
+                    aria-controls="nextNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars" style="color: #fff; font-size: 26px;">
+                    </i>
+                </button>
+                <div class="collapse navbar-collapse" id="nextNav">
+                    <ul class="navbar-nav mx-auto justify-content-center">
+                        <li class="nav-item">
+                            <a class="nav-link rounded" href="/category/clothes">Clothes</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mx-auto justify-content-center">
+                        <li class="nav-item">
+                            <a class="nav-link rounded" href="/category/ipad">Ipad</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mx-auto justify-content-center">
+                        <li class="nav-item">
+                            <a class="nav-link rounded" href="/category/phones">Phones</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mx-auto justify-content-center">
+                        <li class="nav-item">
+                            <a class="nav-link rounded" href="/category/tv">TV</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mx-auto justify-content-center">
+                        <li class="nav-item">
+                            <a class="nav-link rounded" href="/category/watches">Watches</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <section class="text-center mb-4">
+                <div class="row wow faceIn">
+                    <div class="col-6 col-sm-6 col-md-3 my-3 mb-4">
+                        <div class="card">
+                            <a href="/product/oppo">
+                                <div class="view overlay">
+                                    <img class="card-img-top" src="https://placehold.co/150" alt="Product image" />
+                                    <div class="mask rgba-white-slight"></div>
+                                </div>
+                                <div class="card-body text-center">
+                                    <div class="grey-text">
+                                        <h5>Oppo</h5>
+                                    </div>
+                                    <h5 class="font-weight-bold blue-text">
+                                        <strong>10000000 VND</strong>
+                                    </h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-3 my-3 mb-4">
+                        <div class="card">
+                            <a href="/product/samsung-galaxy">
+                                <div class="view overlay">
+                                    <img class="card-img-top" src="https://placehold.co/150" alt="Product image" />
+                                    <div class="mask rgba-white-slight"></div>
+                                </div>
+                                <div class="card-body text-center">
+                                    <div class="grey-text">
+                                        <h5>Samsung Galaxy</h5>
+                                    </div>
+                                    <h5 class="font-weight-bold blue-text">
+                                        <strong>5000000 VND</strong>
+                                    </h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-3 my-3 mb-4">
+                        <div class="card">
+                            <a href="/product/samsung-note">
+                                <div class="view overlay">
+                                    <img class="card-img-top" src="https://placehold.co/150" alt="Product image" />
+                                    <div class="mask rgba-white-slight"></div>
+                                </div>
+                                <div class="card-body text-center">
+                                    <div class="grey-text">
+                                        <h5>Samsung Note</h5>
+                                    </div>
+                                    <h5 class="font-weight-bold blue-text">
+                                        <strong>5000000 VND</strong>
+                                    </h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-3 my-3 mb-4">
+                        <div class="card">
+                            <a href="/product/lg-v30">
+                                <div class="view overlay">
+                                    <img class="card-img-top" src="https://placehold.co/150" alt="Product image" />
+                                    <div class="mask rgba-white-slight"></div>
+                                </div>
+                                <div class="card-body text-center">
+                                    <div class="grey-text">
+                                        <h5>LG V30</h5>
+                                    </div>
+                                    <h5 class="font-weight-bold blue-text">
+                                        <strong>5000000 VND</strong>
+                                    </h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-3 my-3 mb-4">
+                        <div class="card">
+                            <a href="/product/iphone14">
+                                <div class="view overlay">
+                                    <img class="card-img-top" src="https://placehold.co/150" alt="Product image" />
+                                    <div class="mask rgba-white-slight"></div>
+                                </div>
+                                <div class="card-body text-center">
+                                    <div class="grey-text">
+                                        <h5>Iphone 14</h5>
+                                    </div>
+                                    <h5 class="font-weight-bold blue-text">
+                                        <strong>10000000 VND</strong>
+                                    </h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <!--[START] footer -->
+    <footer class="footer text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <div class="row mt-4">
+                <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">About company</h5>
+                    <p>
+                        <strong>SENKO</strong>
+                        offers a wide range of home appliances, peripherals and even clothing. On sale brand value is
+                        significantly lower than the market average. Goods are sold through an online store and an
+                        outlet located at the Barabashovo shopping center in Kharkov.
+                    </p>
+                    <div class="mt-4">
+                        <button onclick="location.href='https://github.com'" type="button"
+                            class="btn btn-circle btn-md">
+                            <em class="fab fa-github fa-lg"></em>
+                        </button>
+                        <button onclick="location.href = 'https://linkedin.com'" type="button"
+                            class="btn btn-circle btn-md">
+                            <em class="fab fa-linkedin fa-lg"></em>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4 pb-1">Address</h5>
+                    <ul class="fa-ul" style="margin-left: 1.65em;">
+                        <li class="mb-3">
+                            <span class="fa-li">
+                                <em class="fas fa-home"></em>
+                            </span>
+                            <span class="ms-2">Ho Chi Minh</span>
+                        </li>
+                        <li class="mb-3">
+                            <span class="fa-li">
+                                <em class="fas fa-envelope"></em>
+                            </span>
+                            <span class="ms-2">
+                                mail-address@gmail.com
+                            </span>
+                        </li>
+                        <li class="mb-3">
+                            <span class="fa-li">
+                                <em class="fas fa-phone"></em>
+                            </span>
+                            <span class="ms-2">phone-number</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">Find us on map</h5>
+                    <iframe class="google_map rounded"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.9258293981825!2d106.67329437415916!3d10.816988089334236!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175291e04dd4207%3A0x10e66eec2cc9fe9a!2zNTI4IE5ndXnhu4VuIFbEg24gQ8O0bmcsIFBoxrDhu51uZyAzLCBHw7IgVuG6pXAsIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1741594190097!5m2!1svi!2s"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+        <div class="text-center copyright p-3">
+            <span class="credit">
+                Created by
+                <a href="https://github.com"></a>
+            </span>
+            <span class="far fa-copyright"></span>
+            <span>2022 All rights reserved</span>
+        </div>
+    </footer>
+    <!--[END] footer -->
+    <!--[START] scripts -->
+    <div>
+        <script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js">
+        </script>
+        <script type="text/javascript">
+            var contextPath = "/";
+            var csrfHeaderName = "X-CSRF-TOKEN";
+            var csrfValue = "YQR9Tl7N59yRheNSeknE-2qkxWLgs9zQoQuHJW3piAJJ8i8rAj1Ndm_6grm84YE0T2TwzlqV6FvYg-v9lz2_QV7eujp8lB9J";
+        </script>
+    </div>
+    <!--[END] scripts -->
+</body>
+
+</html>

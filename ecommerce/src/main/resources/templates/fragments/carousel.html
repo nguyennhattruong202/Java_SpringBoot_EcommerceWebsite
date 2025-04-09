@@ -4,17 +4,17 @@
         <div th:fragment="carousel" 
              id="carouselFull" 
              class="carousel slide carousel-fade" 
-             data-ride="carousel">
+             data-bs-ride="carousel">
             <ol class="carousel-indicators">
-                <li data-target="#carouselFull" 
-                    data-slide-to="0" 
+                <li data-bs-target="#carouselFull" 
+                    data-bs-slide-to="0" 
                     class="active"></li>
-                <li data-target="#carouselFull" 
-                    data-slide-to="1"></li>
-                <li data-target="#carouselFull" 
-                    data-slide-to="2"></li>
-                <li data-target="#carouselFull" 
-                    data-slide-to="3"></li>
+                <li data-bs-target="#carouselFull" 
+                    data-bs-slide-to="1"></li>
+                <li data-bs-target="#carouselFull" 
+                    data-bs-slide-to="2"></li>
+                <li data-bs-target="#carouselFull" 
+                    data-bs-slide-to="3"></li>
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -35,9 +35,9 @@
                 <div class="carousel-item">
                     <a th:href="@{'/category'}">
                         <video class="d-block img-fluid" 
-                               autoplay="true" 
-                               loop="true" 
-                               muted="true">
+                               autoplay 
+                               loop 
+                               muted>
                             <source th:src="@{/img/samsungBanner.mp4}"/>
                         </video>
                     </a>
@@ -77,23 +77,25 @@
             <a class="carousel-control-prev" 
                href="#carouselFull" 
                role="button" 
-               data-slide="prev">
+               data-bs-slide="prev"
+               aria-label="Previous">
                 <span class="carousel-control-prev-icon" 
                       aria-hidden="true">
                 </span>
-                <span class="sr-only">
-                    Previous
+                <span class="sr-only" 
+                      th:text="'Previous'">
                 </span>
             </a>
             <a class="carousel-control-next" 
                href="#carouselFull" 
                role="button" 
-               data-slide="next">
+               data-bs-slide="next"
+               aria-label="Next">
                 <span class="carousel-control-next-icon" 
                       aria-hidden="true">
                 </span>
-                <span class="sr-only">
-                    Next
+                <span class="sr-only" 
+                      th:text="'Next'">
                 </span>
             </a>
         </div>
