@@ -1,12 +1,14 @@
 package com.ecommerce.controller;
 
 import com.ecommerce.dto.request.AuthenticationRequest;
-import com.ecommerce.service.implement.JwtService;
+import com.ecommerce.dto.request.IntrospectRequest;
+import com.ecommerce.dto.response.ApiResponse;
+import com.ecommerce.enums.ResponseCode;
+import com.ecommerce.exception.AppException;
+import com.ecommerce.service.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,21 +18,34 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class AuthenticationController {
 
-    private final JwtService jwtService;
+    private final AuthenticationService authenticationService;
 
-    public AuthenticationController(JwtService jwtService) {
-        this.jwtService = jwtService;
+    public AuthenticationController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping("/token")
-    public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
-        log.info("Info");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Authenticated");
+    public ResponseEntity<ApiResponse<?>> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
+        String authenticate = authenticationService.authenticate(authenticationRequest);
+        ResponseCode responseCode = ResponseCode.AUTHENTICATED;
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setCode(responseCode.getCode());
+        apiResponse.setMessage(responseCode.getMessage());
+        apiResponse.setData(authenticate);
+        return ResponseEntity.status(responseCode.getHttpStatusCode()).body(apiResponse);
     }
 
-    @GetMapping("/token2")
-    public ResponseEntity<String> authenticate2() {
-        log.info("Info");
-        return ResponseEntity.status(HttpStatus.OK).body("Token");
+    @PostMapping("/introspect")
+    public ResponseEntity<ApiResponse<?>> introspect(@RequestBody IntrospectRequest introspectRequest) {
+        boolean introspect = authenticationService.introspect(introspectRequest);
+        if (!introspect) {
+            throw new AppException(ResponseCode.INVALID_TOKEN);
+        }
+        ResponseCode responseCode = ResponseCode.VALID_TOKEN;
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setCode(responseCode.getCode());
+        apiResponse.setMessage(responseCode.getMessage());
+        apiResponse.setData(introspect);
+        return ResponseEntity.status(responseCode.getHttpStatusCode()).body(apiResponse);
     }
 }

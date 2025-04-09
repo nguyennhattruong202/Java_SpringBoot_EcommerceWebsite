@@ -4,7 +4,6 @@ import com.ecommerce.entity.User;
 import com.ecommerce.enums.ResponseCode;
 import com.ecommerce.exception.AppException;
 import com.ecommerce.repository.InvalidatedTokenRepository;
-import com.ecommerce.service.IJwtService;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -23,11 +22,12 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
+import com.ecommerce.service.JwtService;
 
 @Transactional
 @Service
 @Slf4j
-public class JwtService implements IJwtService {
+public class IJwtService implements JwtService {
 
     private final InvalidatedTokenRepository invalidatedTokenRepository;
 
@@ -38,21 +38,18 @@ public class JwtService implements IJwtService {
     @Value("${jwt.refreshable-duration}")
     private long REFRESHABLE_DURATION;
 
-    public JwtService(InvalidatedTokenRepository invalidatedTokenRepository) {
+    public IJwtService(InvalidatedTokenRepository invalidatedTokenRepository) {
         this.invalidatedTokenRepository = invalidatedTokenRepository;
     }
 
     @Override
-    public String generateToken() {
+    public String generateToken(User user) {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
-        JWTClaimsSet jWTClaimsSet = new JWTClaimsSet.Builder()
-                .subject("admin@gmail.com")
-                .issuer("ecommerce.com")
-                .issueTime(new Date())
-                .expirationTime(new Date(
-                        Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
-                .jwtID(UUID.randomUUID().toString())
-                .claim("scope", "ADMIN")
+        JWTClaimsSet jWTClaimsSet = new JWTClaimsSet.Builder().subject(user.getEmail())
+                .issuer("ecommerce.com").issueTime(new Date())
+                .expirationTime(new Date(Instant.now()
+                        .plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
+                .jwtID(UUID.randomUUID().toString()).claim("scope", user.getRole())
                 .build();
         Payload payload = new Payload(jWTClaimsSet.toJSONObject());
         JWSObject jWSObject = new JWSObject(header, payload);
@@ -69,7 +66,6 @@ public class JwtService implements IJwtService {
         try {
             SignedJWT signedJWT = SignedJWT.parse(token);
             if (!isVerify(signedJWT) || isTokenExpired(signedJWT, isRefresh) || isInValidToken(signedJWT)) {
-                log.info("Unauthenticate");
                 throw new AppException(ResponseCode.UNAUTHENTICATED);
             }
             return signedJWT;

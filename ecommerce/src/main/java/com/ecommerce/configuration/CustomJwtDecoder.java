@@ -1,9 +1,8 @@
 package com.ecommerce.configuration;
 
 import com.ecommerce.dto.request.IntrospectRequest;
-import com.ecommerce.service.AuthenticationService;
-import com.nimbusds.jose.JOSEException;
-import java.text.ParseException;
+import com.ecommerce.enums.ResponseCode;
+import com.ecommerce.exception.AppException;
 import java.util.Objects;
 import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +12,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import com.ecommerce.service.AuthenticationService;
 
 @Configuration
 public class CustomJwtDecoder implements JwtDecoder {
@@ -28,20 +28,13 @@ public class CustomJwtDecoder implements JwtDecoder {
 
     @Override
     public Jwt decode(String token) throws JwtException {
-        try {
-            IntrospectRequest introspectRequest = new IntrospectRequest();
-            introspectRequest.setToken(token);
-            if (!authenticationService.introspect(introspectRequest)) {
-                throw new JwtException("Token invalid");
-            }
-        } catch (JOSEException | ParseException e) {
-            throw new JwtException(e.getMessage());
+        if (!authenticationService.introspect(new IntrospectRequest(token))) {
+            throw new AppException(ResponseCode.INVALID_TOKEN);
         }
         if (Objects.isNull(nimbusJwtDecoder)) {
             SecretKeySpec secretKeySpec = new SecretKeySpec(SIGNER_KEY.getBytes(), "HS512");
             nimbusJwtDecoder = NimbusJwtDecoder.withSecretKey(secretKeySpec)
-                    .macAlgorithm(MacAlgorithm.HS512)
-                    .build();
+                    .macAlgorithm(MacAlgorithm.HS512).build();
         }
         return nimbusJwtDecoder.decode(token);
     }
