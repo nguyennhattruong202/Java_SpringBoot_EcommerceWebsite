@@ -10,11 +10,11 @@ public interface UserService {
 
     public void saveUser(User user);
 
-    public User getUserByLogin(String login);
+    public User getUserByEmail(String email);
 
-    public String isLoginUnique(Long id, String login);
+    public String isLoginUnique(Long id, String email);
 
-    public boolean checkLoginRegistration(String login);
+    public boolean checkLoginRegistration(String email);
 
     public Page<User> listByPage(int pageNum);
 

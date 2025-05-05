@@ -2,7 +2,8 @@
 <html lang="en">
     <head th:replace="fragments/head :: head('Login - SENKO', 'none')"></head>
     <body>
-        <div th:fragment="loginModal" class="modal fade" 
+        <div th:fragment="loginModal" 
+             class="modal fade" 
              id="loginModal" 
              role="dialog">
             <div class="modal-dialog">
@@ -24,10 +25,10 @@
                         </div>
                     </div>
                     <div class="modal-body d-flex justify-content-center">
-                        <form th:action="@{/login}" 
-                              method="post">
+                        <form id="loginForm">
                             <input class="text-center rounded" 
-                                   type="text" 
+                                   type="text"
+                                   id="login"
                                    name="login" 
                                    th:attr="placeholder=#{login.username}" 
                                    required="true" 
@@ -35,6 +36,7 @@
                                    maxlength="30"/>
                             <input class="text-center rounded" 
                                    type="password" 
+                                   id="password"
                                    name="password" 
                                    th:attr="placeholder=#{login.password}" 
                                    required="true" 

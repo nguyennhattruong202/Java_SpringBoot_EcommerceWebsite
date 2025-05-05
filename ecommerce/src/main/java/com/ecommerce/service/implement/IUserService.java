@@ -11,17 +11,20 @@ import java.util.Objects;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Transactional
 @Service
-public class UserServiceImplement implements UserService {
+public class IUserService implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImplement(UserRepository userRepository,
+    public IUserService(UserRepository userRepository,
             PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -49,13 +52,13 @@ public class UserServiceImplement implements UserService {
     }
 
     @Override
-    public User getUserByLogin(String login) {
-        return userRepository.findByLogin(login).get();
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).get();
     }
 
     @Override
-    public String isLoginUnique(Long id, String login) {
-        User userByLogin = userRepository.findByLogin(login).get();
+    public String isLoginUnique(Long id, String email) {
+        User userByLogin = userRepository.findByEmail(email).get();
         if (id == null) {
             if (userByLogin != null) {
                 return "Duplicate";
@@ -69,8 +72,8 @@ public class UserServiceImplement implements UserService {
     }
 
     @Override
-    public boolean checkLoginRegistration(String login) {
-        User user = userRepository.findByLogin(login).get();
+    public boolean checkLoginRegistration(String email) {
+        User user = userRepository.findByEmail(email).get();
         return user == null;
     }
 
@@ -98,4 +101,9 @@ public class UserServiceImplement implements UserService {
         userRepository.deleteById(id);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(()
+                -> new UsernameNotFoundException("User not found with " + email));
+    }
 }

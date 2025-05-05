@@ -19,8 +19,8 @@ public class CustomJwtDecoder implements JwtDecoder {
 
     private final AuthenticationService authenticationService;
     private NimbusJwtDecoder nimbusJwtDecoder = null;
-    @Value("${jwt.signer-key}")
-    private String SIGNER_KEY;
+    @Value("${jwt.secret-key}")
+    private String SECRET_KEY;
 
     public CustomJwtDecoder(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
@@ -32,7 +32,7 @@ public class CustomJwtDecoder implements JwtDecoder {
             throw new AppException(ResponseCode.INVALID_TOKEN);
         }
         if (Objects.isNull(nimbusJwtDecoder)) {
-            SecretKeySpec secretKeySpec = new SecretKeySpec(SIGNER_KEY.getBytes(), "HS512");
+            SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "HS512");
             nimbusJwtDecoder = NimbusJwtDecoder.withSecretKey(secretKeySpec)
                     .macAlgorithm(MacAlgorithm.HS512).build();
         }

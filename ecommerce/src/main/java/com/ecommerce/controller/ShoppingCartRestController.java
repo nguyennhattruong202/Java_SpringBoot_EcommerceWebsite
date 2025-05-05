@@ -24,7 +24,7 @@ public class ShoppingCartRestController {
         if (principal == null) {
             return "You must login to add this product to your shopping basket";
         }
-        User user = userService.getUserByLogin(principal.getName());
+        User user = userService.getUserByEmail(principal.getName());
         if (user == null) {
             return "You must login to add this product to your shopping basket";
         }
@@ -37,7 +37,7 @@ public class ShoppingCartRestController {
         if (principal == null) {
             return "You must login to update quantity";
         }
-        User user = userService.getUserByLogin(principal.getName());
+        User user = userService.getUserByEmail(principal.getName());
         if (user == null) {
             return "You must login to update quantity";
         }
@@ -50,7 +50,7 @@ public class ShoppingCartRestController {
         if (principal == null) {
             return "You must login to remove product";
         }
-        User user = userService.getUserByLogin(principal.getName());
+        User user = userService.getUserByEmail(principal.getName());
         if (user == null) {
             return "You must login to remove product";
         }

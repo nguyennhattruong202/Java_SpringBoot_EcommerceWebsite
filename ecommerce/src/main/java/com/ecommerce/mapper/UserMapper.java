@@ -7,7 +7,6 @@ public class UserMapper {
 
     public static User toUser(UserRegistrationRequest userRegistrationRequest) {
         User user = new User();
-        user.setLogin(userRegistrationRequest.getLogin());
         user.setEmail(userRegistrationRequest.getEmail());
         user.setPassword(userRegistrationRequest.getPassword());
         user.setRole(userRegistrationRequest.getRole());

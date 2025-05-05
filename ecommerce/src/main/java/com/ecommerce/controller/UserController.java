@@ -28,8 +28,8 @@ public class UserController {
     @GetMapping({"/", ""})
     public String getUserInfo(Principal principal, Model model) {
         if (principal != null) {
-            model.addAttribute("userDetails", userService.getUserByLogin(principal.getName()).getUserInfo());
-            model.addAttribute("user", userService.getUserByLogin(principal.getName()));
+            model.addAttribute("userDetails", userService.getUserByEmail(principal.getName()).getUserInfo());
+            model.addAttribute("user", userService.getUserByEmail(principal.getName()));
             return "user/user-main";
         } else {
             model.addAttribute("error", new NotFoundException("User was not found"));
@@ -39,14 +39,14 @@ public class UserController {
 
     @GetMapping("/edit")
     public String showEditPage(Principal principal, Model model) {
-        model.addAttribute("userDetails", userService.getUserByLogin(principal.getName()).getUserInfo());
-        model.addAttribute("user", userService.getUserByLogin(principal.getName()));
+        model.addAttribute("userDetails", userService.getUserByEmail(principal.getName()).getUserInfo());
+        model.addAttribute("user", userService.getUserByEmail(principal.getName()));
         return "user/user-edit";
     }
 
     @PostMapping("/edit")
     public String editUser(Principal principal, User user, BindingResult bindingResult) {
-        User newUser = userService.getUserByLogin(principal.getName());
+        User newUser = userService.getUserByEmail(principal.getName());
         if (!user.getPassword().equals("")) {
             if (!passwordEncoder.matches(user.getPassword(), newUser.getPassword())) {
                 newUser.setPassword(passwordEncoder.encode(user.getPassword()));

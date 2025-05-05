@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT user FROM User user WHERE user.login = :login")
-    public Optional<User> findByLogin(@Param("login") String login);
+    @Query("SELECT user FROM User user WHERE user.email = :email")
+    public Optional<User> findByEmail(@Param("email") String email);
 
     public Long countById(Long id);
 }

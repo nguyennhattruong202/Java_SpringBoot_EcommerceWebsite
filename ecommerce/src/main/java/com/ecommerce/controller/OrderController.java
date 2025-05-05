@@ -38,7 +38,7 @@ public class OrderController {
     @GetMapping("/orders")
     public String showOrder(Model model, Principal principal) {
         if (principal != null) {
-            User user = userService.getUserByLogin(principal.getName());
+            User user = userService.getUserByEmail(principal.getName());
             model.addAttribute("orders", orderService.getAllOrdersByUser(user));
             return "user/orders";
         } else {
@@ -51,8 +51,8 @@ public class OrderController {
     public String createOrders(Model model, Principal principal) {
         if (principal != null) {
             model.addAttribute("order", new Order());
-            model.addAttribute("user", userService.getUserByLogin(principal.getName()));
-            model.addAttribute("orderBaskets", userService.getUserByLogin(principal.getName()).getOrderBaskets());
+            model.addAttribute("user", userService.getUserByEmail(principal.getName()));
+            model.addAttribute("orderBaskets", userService.getUserByEmail(principal.getName()).getOrderBaskets());
             model.addAttribute("waiting", OrderType.PENDING);
             model.addAttribute("payed", OrderType.PAID);
             return "checkout";
@@ -64,7 +64,7 @@ public class OrderController {
 
     @PostMapping("/payment")
     public String saveOrder(Order newOrder, Principal principal, Model model, RedirectAttributes redirectAttribute) {
-        User user = userService.getUserByLogin(principal.getName());
+        User user = userService.getUserByEmail(principal.getName());
         List<OrderBasket> orderBaskets = user.getOrderBaskets();
         newOrder.setUser(user);
         newOrder.setTotalPrice(orderService.countSum(orderBaskets));

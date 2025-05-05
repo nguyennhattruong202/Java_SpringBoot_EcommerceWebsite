@@ -15,6 +15,8 @@ import com.ecommerce.service.ProductService;
 import com.ecommerce.service.UserService;
 import java.security.Principal;
 import java.util.List;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +38,13 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        if (userDetails != null) {
+            model.addAttribute("isSignIn", true);
+            model.addAttribute("login", userDetails.getUsername());
+        } else {
+            model.addAttribute("isSignIn", false);
+        }
         model.addAttribute("listCategories", categoryService.findAllEnabled());
         try {
             model.addAttribute("listProducts", productService.getRandomAmountOfProducts());
@@ -69,7 +77,7 @@ public class MainController {
     @GetMapping("/basket")
     public String showShoppingCart(Model model, Principal principal) {
         if (principal != null) {
-            List<OrderBasket> orderBasket = userService.getUserByLogin(principal.getName()).getOrderBaskets();
+            List<OrderBasket> orderBasket = userService.getUserByEmail(principal.getName()).getOrderBaskets();
             model.addAttribute("orderBaskets", orderBasket);
             model.addAttribute("order", new Order());
         } else {
@@ -83,5 +91,10 @@ public class MainController {
     public String showCategories(Model model) {
         model.addAttribute("listCategories", categoryService.findAllEnabled());
         return "category";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 }

@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" 
       xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="blocks/fragments :: head('Products - SENKO', 'none')"></head>
+    <head th:replace="fragments/head :: head('Products - SENKO', 'none')"></head>
     <body>
-        <div th:replace="blocks/fragments :: admin_navbar"></div>
+        <div th:replace="admin/fragments/navbar :: navbar"></div>
         <div class="container-fluid">
             <div>
-                <h2 class="mt-3 text-center">
-                    [[#{admin.products.title}]]
+                <h2 class="mt-3 text-center" 
+                    th:text="#{admin.products.title}">
                 </h2>
                 <a th:href="@{/admin/products/new}">
                     <i class="fas fa-folder-plus fa-2x"></i>
                 </a>
             </div>
             <div th:if="${message != null}" 
-                 class="alert alert-success text-center">
-                [[${message}]]
+                 class="alert alert-success text-center"
+                 th:text="${message}">
             </div>
             <div>
                 <form th:action="@{/admin/products/page/1}" 
@@ -37,8 +37,8 @@
                         </option>
                         <th:block th:each="cat : ${listCategories}">
                             <option th:value="${cat.id}" 
-                                    th:selected="(${categoryId} == ${cat.id})">
-                                [[${cat.title}]]
+                                    th:selected="(${categoryId} == ${cat.id})"
+                                    th:text="${cat.title}">
                             </option>
                         </th:block>
                     </select>
@@ -51,8 +51,8 @@
                     &nbsp;&nbsp;
                     <button type="submit" 
                             class="custom_buttons rounded" 
-                            style="height:40px;width: 80px;">
-                        [[#{admin.users.create.submit}]]
+                            style="height:40px;width: 80px;"
+                            th:text="#{admin.users.create.submit}">
                     </button>
                     <input type="button" 
                            value="Clear" 
@@ -66,61 +66,63 @@
                     <th class="d-none d-sm-table-cell">
                         <a th:if="${sortField != 'id'}" 
                            class="text-white" 
-                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortDir}}">
-                            [[#{admin.product.id}]]
+                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortDir}}"
+                           th:text="#{admin.product.id}">
                         </a>
                         <a th:if="${sortField == 'id'}" 
                            class="text-white" 
-                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
-                            [[#{admin.product.id}]]
+                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}"
+                           th:text="#{admin.product.id}">
                         </a>
                         <span th:if="${sortField == 'id'}" 
                               th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}">
                         </span>
                     </th>
-                    <th>[[#{admin.product.image}]]</th>
+                    <th th:text="#{admin.product.image}"></th>
                     <th>
                         <a th:if="${sortField != 'title'}" 
                            class="text-white" 
-                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${sortDir}}">
-                            [[#{admin.product.title}]]
+                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${sortDir}}"
+                           th:text="#{admin.product.title}">
                         </a>
                         <a th:if="${sortField == 'title'}" 
                            class="text-white" 
-                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">
-                            [[#{admin.product.title}]]
+                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}"
+                           th:text="#{admin.product.title}">
                         </a>
                         <span th:if="${sortField == 'title'}" 
                               th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}">
                         </span>
                     </th>
-                    <th class="d-none d-sm-table-cell">[[#{admin.product.alias}]]</th>
+                    <th class="d-none d-sm-table-cell"
+                        th:text="#{admin.product.alias}">
+                    </th>
                     <th class="d-none d-sm-table-cell">
                         <a th:if="${sortField != 'description'}" 
                            class="text-white" 
-                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=description&sortDir=' + ${sortDir}}">
-                            [[#{admin.product.shortDescription}]]
+                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=description&sortDir=' + ${sortDir}}"
+                           th:text="#{admin.product.shortDescription}">
                         </a>
                         <a th:if="${sortField == 'description'}" 
                            class="text-white" 
-                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=description&sortDir=' + ${reverseSortDir}}">
-                            [[#{admin.product.shortDescription}]]
+                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=description&sortDir=' + ${reverseSortDir}}"
+                           th:text="#{admin.product.shortDescription}">
                         </a>
                         <span th:if="${sortField == 'description'}"
                               th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}">
                         </span>
                     </th>
-                    <th>[[#{admin.product.price}]]</th>
+                    <th th:text="#{admin.product.price}"></th>
                     <th class="d-none d-sm-table-cell">
                         <a th:if="${sortField != 'vendor'}" 
                            class="text-white"
-                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=vendor&sortDir=' + ${sortDir}}">
-                            [[#{admin.product.vendor}]]
+                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=vendor&sortDir=' + ${sortDir}}"
+                           th:text="#{admin.product.vendor}">
                         </a>
                         <a th:if="${sortField == 'vendor'}" 
                            class="text-white"
-                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=vendor&sortDir=' + ${reverseSortDir}}">
-                            [[#{admin.product.vendor}]]
+                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=vendor&sortDir=' + ${reverseSortDir}}"
+                           th:text="#{admin.product.vendor}">
                         </a>
                         <span th:if="${sortField == 'vendor'}"
                               th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}">
@@ -129,19 +131,19 @@
                     <th class="d-none d-sm-table-cell">
                         <a th:if="${sortField != 'category'}" 
                            class="text-white"
-                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=category&sortDir=' + ${sortDir}}">
-                            [[#{admin.product.category}]]
+                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=category&sortDir=' + ${sortDir}}"
+                           th:text="#{admin.product.category}">
                         </a>
                         <a th:if="${sortField == 'category'}" 
                            class="text-white"
-                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=category&sortDir=' + ${reverseSortDir}}">
-                            [[#{admin.product.category}]]
+                           th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=category&sortDir=' + ${reverseSortDir}}"
+                           th:text="#{admin.product.category}">
                         </a>
                         <span th:if="${sortField == 'category'}"
                               th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}">
                         </span>
                     </th>
-                    <th>[[#{admin.managment}]]</th>
+                    <th th:text="#{admin.managment}"></th>
                     </thead>
                     <tbody>
                         <tr th:each="product : ${products}">
@@ -152,7 +154,7 @@
                                 <img class="img-fluid mx-auto d-block image" 
                                      width="150" 
                                      height="150"
-                                     th:src="'/product-images/'+${product.imageURL}"/>
+                                     th:src="${product.image}"/>
                             </td>
                             <td th:title="${product.title}" 
                                 th:text="${product.title}">
@@ -160,12 +162,12 @@
                             <td class="d-none d-sm-table-cell" 
                                 th:title="${product.alias}">
                                 <a class="link-detail" 
-                                   th:href="@{'/product/'+${product.alias}}">
-                                    [[${product.shortAlias}]]
+                                   th:href="@{'/product/'+${product.alias}}"
+                                   th:text="${product.alias}">
                                 </a>
                             </td>
                             <td class="d-none d-sm-table-cell" 
-                                th:text="${product.shortDescription}">
+                                th:text="${product.description}">
                             </td>
                             <td th:text="${product.price}"></td>
                             <td class="d-none d-sm-table-cell" 

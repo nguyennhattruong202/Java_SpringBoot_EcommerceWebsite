@@ -27,14 +27,14 @@ public class ApplicationInitConfig {
             havingValue = "com.mysql.cj.jdbc.Driver")
     public ApplicationRunner applicationRunner() {
         return args -> {
-            if (userRepository.findByLogin("admin@gmail.com").isEmpty()) {
+            if (userRepository.findByEmail("admin@gmail.com").isEmpty()) {
                 UserInfo userInfo = new UserInfo();
                 userInfo.setName("admin");
                 userInfo.setSurname("admin");
                 userInfo.setPhone("0865761892");
 
                 User user = new User();
-                user.setLogin("admin@gmail.com");
+                user.setEmail("admin@gmail.com");
                 user.setEmail("admin@gmail.com");
                 user.setPassword(passwordEncoder.encode("admin"));
                 user.setRole(Role.ADMIN);
