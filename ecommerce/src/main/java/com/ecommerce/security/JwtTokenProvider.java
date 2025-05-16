@@ -2,9 +2,9 @@ package com.ecommerce.security;
 
 import com.ecommerce.service.InvalidatedTokenService;
 import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.StringJoiner;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,17 +46,19 @@ public class JwtTokenProvider {
     }
 
     public String generateToken(UserDetails userDetails, long validityInSeconds) {
+        JWSHeader header = new JWSHeader.Builder(JWSAlgorithm.HS512).type(JOSEObjectType.JWT).build();
+
         JWTClaimsSet jWTClaimsSet = new JWTClaimsSet.Builder()
                 .subject(userDetails.getUsername())
                 .issuer("ecommerce.com")
                 .issueTime(new Date())
                 .expirationTime(Date.from(Instant.now().plus(validityInSeconds, ChronoUnit.SECONDS)))
-                .jwtID(UUID.randomUUID().toString()).claim("scope", userDetails.getAuthorities())
+                .jwtID(UUID.randomUUID().toString()).claim("scope", buildScope(userDetails))
                 .build();
+        
         try {
-            SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS512), jWTClaimsSet);
-            JWSSigner signer = new MACSigner(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-            signedJWT.sign(signer);
+            SignedJWT signedJWT = new SignedJWT(header, jWTClaimsSet);
+            signedJWT.sign(new MACSigner(SECRET_KEY.getBytes(StandardCharsets.UTF_8)));
             return signedJWT.serialize();
         } catch (JOSEException e) {
             throw new RuntimeException(e);
@@ -96,5 +99,13 @@ public class JwtTokenProvider {
 
     public Date extractExpirationTime(String token) throws ParseException {
         return SignedJWT.parse(token).getJWTClaimsSet().getExpirationTime();
+    }
+
+    private String buildScope(UserDetails userDetails) {
+        StringJoiner stringJoiner = new StringJoiner("");
+        if (!userDetails.getAuthorities().isEmpty()) {
+            userDetails.getAuthorities().forEach(auth -> stringJoiner.add(auth.getAuthority()));
+        }
+        return stringJoiner.toString();
     }
 }

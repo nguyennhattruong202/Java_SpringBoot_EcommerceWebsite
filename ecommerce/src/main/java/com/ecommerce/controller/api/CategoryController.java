@@ -4,6 +4,7 @@ import com.ecommerce.entity.Category;
 import com.ecommerce.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/categories")
     @Operation(summary = "Get categories list", description = "Return categories list")
     public List<Category> getCategoriesEnable() {

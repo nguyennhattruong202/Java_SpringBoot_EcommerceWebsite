@@ -55,43 +55,43 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/registration")
-    public String registration(Model model) {
-        model.addAttribute("user", new UserRegistrationRequest());
-        model.addAttribute("userInfo", new UserInfoRegistrationRequest());
-        return "registration";
-    }
-
-    @PostMapping("/registration")
-    public String registration(UserRegistrationRequest userRegistrationRequest,
-            UserInfoRegistrationRequest userInfoRegistrationRequest) {
-        userRegistrationRequest.setRole(Role.USER);
-        User user = UserMapper.toUser(userRegistrationRequest);
-        UserInfo userInfo = UserInfoMapper.toUserInfo(userInfoRegistrationRequest);
-        user.setUserInfo(userInfo);
-        userInfo.setUser(user);
-        userService.saveUser(user);
-        return "redirect:/";
-    }
-
-    @GetMapping("/basket")
-    public String showShoppingCart(Model model, Principal principal) {
-        if (principal != null) {
-            List<OrderBasket> orderBasket = userService.getUserByEmail(principal.getName()).getOrderBaskets();
-            model.addAttribute("orderBaskets", orderBasket);
-            model.addAttribute("order", new Order());
-        } else {
-            model.addAttribute("error", new NotFoundException("Order basket was not found"));
-            return "error/page404";
-        }
-        return "shopping-cart";
-    }
-
-    @GetMapping("/category")
-    public String showCategories(Model model) {
-        model.addAttribute("listCategories", categoryService.findAllEnabled());
-        return "category";
-    }
+//    @GetMapping("/registration")
+//    public String registration(Model model) {
+//        model.addAttribute("user", new UserRegistrationRequest());
+//        model.addAttribute("userInfo", new UserInfoRegistrationRequest());
+//        return "registration";
+//    }
+//
+//    @PostMapping("/registration")
+//    public String registration(UserRegistrationRequest userRegistrationRequest,
+//            UserInfoRegistrationRequest userInfoRegistrationRequest) {
+//        userRegistrationRequest.setRole(Role.USER);
+//        User user = UserMapper.toUser(userRegistrationRequest);
+//        UserInfo userInfo = UserInfoMapper.toUserInfo(userInfoRegistrationRequest);
+//        user.setUserInfo(userInfo);
+//        userInfo.setUser(user);
+//        userService.saveUser(user);
+//        return "redirect:/";
+//    }
+//
+//    @GetMapping("/basket")
+//    public String showShoppingCart(Model model, Principal principal) {
+//        if (principal != null) {
+//            List<OrderBasket> orderBasket = userService.getUserByEmail(principal.getName()).getOrderBaskets();
+//            model.addAttribute("orderBaskets", orderBasket);
+//            model.addAttribute("order", new Order());
+//        } else {
+//            model.addAttribute("error", new NotFoundException("Order basket was not found"));
+//            return "error/page404";
+//        }
+//        return "shopping-cart";
+//    }
+//
+//    @GetMapping("/category")
+//    public String showCategories(Model model) {
+//        model.addAttribute("listCategories", categoryService.findAllEnabled());
+//        return "category";
+//    }
 
     @GetMapping("/login")
     public String login() {

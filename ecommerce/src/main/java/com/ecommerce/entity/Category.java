@@ -64,6 +64,7 @@ public class Category implements Serializable {
     private Set<Category> children = new HashSet<>();
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
+    @JsonIgnore
     private List<Product> products;
 
     public static Category copyIdAndTitle(Category category) {

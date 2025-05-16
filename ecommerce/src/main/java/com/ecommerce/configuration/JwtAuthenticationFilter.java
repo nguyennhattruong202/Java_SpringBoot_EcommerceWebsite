@@ -26,17 +26,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = jwtTokenProvider.getTokenFromHeaderRequest(request);
-        Authentication authenticated = SecurityContextHolder.getContext().getAuthentication();
-        if (token != null && jwtTokenProvider.validateToken(token) && authenticated == null) {
-            try {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(jwtTokenProvider.extractUsername(token));
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(auth);
-                filterChain.doFilter(request, response);
-            } catch (UsernameNotFoundException e) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
-            }
-        }
+//        String token = jwtTokenProvider.getTokenFromHeaderRequest(request);
+//        Authentication authenticated = SecurityContextHolder.getContext().getAuthentication();
+//        if (token != null && jwtTokenProvider.validateToken(token) && authenticated == null) {
+//            try {
+//                UserDetails userDetails = userDetailsService.loadUserByUsername(jwtTokenProvider.extractUsername(token));
+//                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+//                SecurityContextHolder.getContext().setAuthentication(auth);
+//                filterChain.doFilter(request, response);
+//            } catch (UsernameNotFoundException e) {
+//                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
+//            }
+//        }
     }
 }

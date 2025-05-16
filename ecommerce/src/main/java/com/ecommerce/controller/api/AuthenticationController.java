@@ -1,6 +1,7 @@
-package com.ecommerce.controller;
+package com.ecommerce.controller.api;
 
 import com.ecommerce.dto.request.AuthenticationRequest;
+import com.ecommerce.dto.request.IntrospectRequest;
 import com.ecommerce.dto.response.ApiResponse;
 import com.ecommerce.entity.InvalidatedToken;
 import com.ecommerce.enums.ResponseCode;
@@ -93,17 +94,17 @@ public class AuthenticationController {
         }
     }
 
-//    @PostMapping("/introspect")
-//    public ResponseEntity<ApiResponse<?>> introspect(@RequestBody IntrospectRequest introspectRequest) {
-//        boolean introspect = authenticationService.introspect(introspectRequest);
-//        if (!introspect) {
-//            throw new AppException(ResponseCode.INVALID_TOKEN);
-//        }
-//        ResponseCode responseCode = ResponseCode.VALID_TOKEN;
-//        ApiResponse apiResponse = new ApiResponse();
-//        apiResponse.setCode(responseCode.getCode());
-//        apiResponse.setMessage(responseCode.getMessage());
-//        apiResponse.setData(introspect);
-//        return ResponseEntity.status(responseCode.getHttpStatusCode()).body(apiResponse);
-//    }
+    @PostMapping("/introspect")
+    public ResponseEntity<ApiResponse<?>> introspect(@RequestBody IntrospectRequest introspectRequest) {
+        boolean introspect = authenticationService.introspect(introspectRequest);
+        if (!introspect) {
+            throw new AppException(ResponseCode.INVALID_TOKEN);
+        }
+        ResponseCode responseCode = ResponseCode.VALID_TOKEN;
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setCode(responseCode.getCode());
+        apiResponse.setMessage(responseCode.getMessage());
+        apiResponse.setData(introspect);
+        return ResponseEntity.status(responseCode.getHttpStatusCode()).body(apiResponse);
+    }
 }

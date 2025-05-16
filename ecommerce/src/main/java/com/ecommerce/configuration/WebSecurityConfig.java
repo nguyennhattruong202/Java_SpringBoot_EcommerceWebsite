@@ -21,7 +21,9 @@ public class WebSecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsService userDetailsService;
 
-    public WebSecurityConfig(CustomJwtDecoder customJwtDecoder, JwtTokenProvider jwtTokenProvider, 
+    public WebSecurityConfig(
+            CustomJwtDecoder customJwtDecoder,
+            JwtTokenProvider jwtTokenProvider,
             UserDetailsService userDetailsService) {
         this.customJwtDecoder = customJwtDecoder;
         this.jwtTokenProvider = jwtTokenProvider;
@@ -43,8 +45,8 @@ public class WebSecurityConfig {
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer
                 .decoder(customJwtDecoder).jwtAuthenticationConverter(jwtAuthenticationConverter()))
                 .authenticationEntryPoint(new JwtAuthenticationEntryPoint()));
-        httpSecurity.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService),
-                UsernamePasswordAuthenticationFilter.class);
+//        httpSecurity.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService),
+//                UsernamePasswordAuthenticationFilter.class);
         httpSecurity.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
         return httpSecurity.build();
     }

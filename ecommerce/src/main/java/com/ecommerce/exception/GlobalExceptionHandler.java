@@ -2,11 +2,13 @@ package com.ecommerce.exception;
 
 import com.ecommerce.dto.response.ApiResponse;
 import com.ecommerce.enums.ResponseCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = AppException.class)

@@ -10,6 +10,6 @@ public interface AuthenticationService {
     public UserDetails authenticate(AuthenticationRequest authenticationRequest);
 
     public ResponseCookie cleanJwtCookie();
-    
+
     public boolean introspect(IntrospectRequest introspectRequest);
 }
